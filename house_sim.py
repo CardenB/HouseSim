@@ -4,6 +4,7 @@ import numpy as np
 import altair as alt
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+from streamlit_theme import st_theme
 
 
 # ---------------- Helper Functions ----------------
@@ -544,6 +545,37 @@ colors = {
     "grid": "#4C566A",  # Dark blue-grey for grid
     "background": "#2E3440",  # Dark background
 }
+
+
+# Update the color scheme section to handle both themes
+theme = st_theme()
+is_dark_mode = theme["backgroundColor"] != "#ffffff"  # Check if background is not white
+
+# Define color palettes for both modes
+colors = {
+    "dark": {
+        "primary": "#E5E9F0",  # Light grey text
+        "secondary": "#88C0D0",  # Light blue
+        "accent1": "#A3BE8C",  # Sage green
+        "accent2": "#B48EAD",  # Lavender
+        "highlight": "#EBCB8B",  # Warm yellow
+        "grid": "#4C566A",  # Dark blue-grey for grid
+        "background": "#2E3440",  # Dark background
+    },
+    "light": {
+        "primary": "#2E3440",  # Dark grey text
+        "secondary": "#5E81AC",  # Darker blue
+        "accent1": "#4C566A",  # Dark blue-grey
+        "accent2": "#8FBCBB",  # Teal
+        "highlight": "#D08770",  # Coral
+        "grid": "#ECEFF4",  # Light grey for grid
+        "background": "#FFFFFF",  # White background
+    },
+}
+
+# Select current color scheme based on theme
+colors = colors["dark"] if is_dark_mode else colors["light"]
+
 
 # Define base layout template for all plots
 plot_template = dict(
