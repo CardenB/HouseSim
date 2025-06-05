@@ -462,6 +462,56 @@ df_no_recast = df_no_recast[df_no_recast['Month'] <= max_months].copy()
 # ---------------- Charts ----------------
 st.subheader("Monthly payment")
 recast_points = df[df['RecastAmount'] > 0].copy()
+
+# Define a modern dark color palette
+colors = {
+    'primary': '#E5E9F0',      # Light grey text
+    'secondary': '#88C0D0',    # Light blue
+    'accent1': '#A3BE8C',      # Sage green
+    'accent2': '#B48EAD',      # Lavender
+    'highlight': '#EBCB8B',    # Warm yellow
+    'grid': '#4C566A',         # Dark blue-grey for grid
+    'background': '#2E3440'    # Dark background
+}
+
+# Define base layout template for all plots
+plot_template = dict(
+    layout=dict(
+        paper_bgcolor=colors['background'],
+        plot_bgcolor=colors['background'],
+        font=dict(
+            family="Arial, sans-serif",
+            color=colors['primary']
+        ),
+        xaxis=dict(
+            gridcolor=colors['grid'],
+            showline=True,
+            linewidth=1,
+            linecolor=colors['grid'],
+            showgrid=True,
+            tickfont=dict(color=colors['primary']),
+            title_font=dict(color=colors['primary'])
+        ),
+        yaxis=dict(
+            gridcolor=colors['grid'],
+            showline=True,
+            linewidth=1,
+            linecolor=colors['grid'],
+            showgrid=True,
+            tickfont=dict(color=colors['primary']),
+            title_font=dict(color=colors['primary'])
+        )
+    )
+)
+# Also add initial payment point
+initial_point = pd.DataFrame({
+    'Month': [0],
+    'TotalPayment': [df['TotalPayment'].iloc[0]],
+    'EffectivePayment': [df['EffectivePayment'].iloc[0]],
+    'RecastAmount': [0],
+    'P&I': [df['P&I'].iloc[0]]
+})
+
 if len(recast_points) > 0:
     # For each recast point, create a copy of the next row to show payment after recast
     next_points = recast_points.copy()
@@ -473,15 +523,9 @@ if len(recast_points) > 0:
         if month < len(df):
             next_points.loc[idx, 'TotalPayment'] = df.loc[df['Month'] == month, 'TotalPayment'].values[0]
             next_points.loc[idx, 'EffectivePayment'] = df.loc[df['Month'] == month, 'EffectivePayment'].values[0]
+else:
+    next_points = initial_point
 
-# Also add initial payment point
-initial_point = pd.DataFrame({
-    'Month': [0],
-    'TotalPayment': [df['TotalPayment'].iloc[0]],
-    'EffectivePayment': [df['EffectivePayment'].iloc[0]],
-    'RecastAmount': [0],
-    'P&I': [df['P&I'].iloc[0]]
-})
 next_points = pd.concat([initial_point, next_points], ignore_index=True)
 
 # Create monthly payments figure
