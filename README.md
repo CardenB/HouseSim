@@ -2,6 +2,30 @@
 
 A Streamlit-based web application for simulating mortgage scenarios and analyzing housing costs.
 
+The application is hosted at: https://housesim.cardieb.com
+
+## Local Development Setup
+
+### Running without Docker
+
+1. Create and activate a virtual environment (optional but recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the application:
+```bash
+streamlit run house_sim.py --server.port 3001
+```
+
+The application will be available at http://localhost:3001
+
 ## Quick Start with Docker
 
 ### Running the Container
@@ -65,6 +89,10 @@ If you need to use a different port:
 1. Update the port in the Dockerfile's Streamlit configuration
 2. Change the port mapping when running the container
 3. Rebuild and redeploy using the steps above
+
+## Deployment
+
+The application is automatically deployed to https://housesim.cardieb.com
 
 ## Troubleshooting
 
