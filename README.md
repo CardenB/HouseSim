@@ -111,3 +111,46 @@ If the application isn't accessible, check:
 1. Container status: `docker ps -a`
 2. Container logs for errors: `docker logs house-sim`
 3. Port availability: `netstat -tuln | grep 3001`
+
+## Input Parameters
+
+### Mortgage Details
+- **Purchase price**: The total cost of the home
+- **Down payment**: Initial payment made on the home
+- **Interest rate**: Annual interest rate for the mortgage
+- **Term**: Length of the mortgage in years
+- **Property tax**: Can be entered as either:
+  - Annual percentage of home value
+  - Monthly fixed amount
+- **Property tax appreciation**: Annual percentage increase in property taxes
+- **Insurance**: Monthly insurance payment
+
+### Recast Strategy
+- **Method**: Choose between:
+  - **Savings-based**: Automatically recast when savings exceed buffer
+  - **Fixed lump sum**: Recast with fixed amount at regular intervals
+- **Months between recasts**: How often to attempt recasting
+- **Initial cash**: Starting savings amount
+- **Monthly savings**: (Savings-based only) Monthly amount added to savings
+- **Cash buffer**: (Savings-based only) Minimum savings to maintain
+- **Recast amount**: (Fixed lump sum only) Amount to recast each interval
+
+### Income Scenarios (Optional)
+- **Primary Income**:
+  - Gross annual income
+  - Option to manually set tax rate or use calculated rate
+- **Secondary Income**:
+  - Gross annual income
+  - Option to manually set tax rate or use calculated rate
+- **Baseline non-housing spend**: Monthly non-housing expenses
+
+### Chart Settings
+- **Time horizon**: Number of months to display in charts
+
+## Charts and Visualizations
+
+The application provides several visualizations:
+1. **Monthly Payment**: Shows payment amount over time with recast points marked
+2. **Cumulative Payments**: Compares total payments with and without recasting
+3. **Payment vs. Income Ratios**: (If income entered) Shows PITI ratios for pre and post-tax income
+4. **Savings Balance**: Tracks savings account balance over time
